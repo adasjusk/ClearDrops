@@ -1,0 +1,20 @@
+name: ClearDrops
+api: 1.0.0
+version: '${project.version}'
+main: com.orangstudios.cleardrops.ClearDrops
+api-version: '26.2'
+author: adasjusk
+description: Clear dropped items around the player within a configurable chunk radius
+commands:
+  clean:
+    description: Clear dropped items around you
+    usage: /clean
+    permission: cleardrops.use
+  clearlag:
+    description: Clear dropped items around you
+    usage: /clearlag
+    permission: cleardrops.use
+permissions:
+  cleardrops.use:
+    description: Allows use of the clean and clearlag commands
+    default: true
