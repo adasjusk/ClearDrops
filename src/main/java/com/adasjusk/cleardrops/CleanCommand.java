@@ -10,25 +10,14 @@ import java.util.Set;
 
 public class CleanCommand implements CommandExecutor {
     private final ClearDrops plugin;
-    public CleanCommand(ClearDrops plugin) {
-        this.plugin = plugin;
-    }
+    public CleanCommand(ClearDrops plugin) { this.plugin = plugin; }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage("☒ Only players can use this command.");
-            return true;
-        }
+        if (!(sender instanceof Player player)) { sender.sendMessage("☒ Only players can use this command."); return true;}
         org.bukkit.Location location = player.getLocation();
-        if (location == null) {
-            player.sendMessage("⚐ Could not determine your location.");
-            return true;
-        }
+        if (location == null) { player.sendMessage("⚐ Could not determine your location."); return true; }
         org.bukkit.World world = location.getWorld();
-        if (world == null) {
-            player.sendMessage("☒ Your world is unavailable right now.");
-            return true;
-        }
+        if (world == null) { player.sendMessage("☒ Your world is unavailable right now."); return true; }
         int chunkRadius = plugin.getChunkRadius();
         int removed = 0;
         if (plugin.isFolia()) {
@@ -36,10 +25,7 @@ public class CleanCommand implements CommandExecutor {
         } else {
             removed = cleanSync(player, world, location, chunkRadius);
         }
-        if (plugin.isFolia()) {
-            player.sendMessage("⚠ Cleanup queued within " + chunkRadius + " chunk(s).);");
-            return true;
-        }
+        if (plugin.isFolia()) { player.sendMessage("⚠ Cleanup queued within " + chunkRadius + " chunk(s).);"); return true; }
         player.sendMessage("✔ Removed " + removed + " dropped item(s) within " + chunkRadius + " chunk(s).");
         return true;
     }
@@ -61,17 +47,10 @@ public class CleanCommand implements CommandExecutor {
                 for (org.bukkit.entity.Entity entity : chunk.getEntities()) {
                     if (entity instanceof Item item) {
                         Material type = item.getItemStack().getType();
-                        if (excluded.contains(type)) {
-                            continue;
-                        }
+                        if (excluded.contains(type)) { continue; }
                         item.remove();
                         removed++;
-                    }
-                }
-            }
-        }
-        return removed;
-    }
+        }   }   }   } return removed; }
 
     private int cleanFolia(Player player, org.bukkit.World world, org.bukkit.Location location, int chunkRadius) {
         Set<Material> excluded = plugin.getExcludedItems();
@@ -83,29 +62,16 @@ public class CleanCommand implements CommandExecutor {
             for (int dz = -chunkRadius; dz <= chunkRadius; dz++) {
                 int cx = playerChunkX + dx;
                 int cz = playerChunkZ + dz;
-                regionScheduler.execute(
-                        plugin,
-                        world,
-                        cx,
-                        cz,
+                regionScheduler.execute(plugin, world, cx, cz,
                         () -> {
-                            if (!world.isChunkLoaded(cx, cz)) {
-                                return;
-                            }
+                            if (!world.isChunkLoaded(cx, cz)) { return; }
                             org.bukkit.Chunk chunk = world.getChunkAt(cx, cz);
                             for (org.bukkit.entity.Entity entity : chunk.getEntities()) {
                                 if (entity instanceof Item item) {
                                     Material type = item.getItemStack().getType();
-                                    if (excluded.contains(type)) {
-                                        continue;
-                                    }
+                                    if (excluded.contains(type)) { continue; }
                                     item.remove();
-                                }
-                            }
-                        }
+                        }   }   }
                 );
-            }
-        }
-        return 0;
-    }
-}
+        }   } return 0;
+}   }
