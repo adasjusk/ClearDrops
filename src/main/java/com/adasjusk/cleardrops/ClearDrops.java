@@ -19,30 +19,17 @@ public class ClearDrops extends JavaPlugin {
 
         CleanCommand cleanCommand = new CleanCommand(this);
         var clean = getCommand("clean");
-        if (clean == null) {
-            getLogger().severe("⚠ Could not register the /clean command. Check plugin.yml.");
-            return;
-        }
+        if (clean == null) { getLogger().severe("⚠ Could not register the /clean command. Check plugin.yml."); return; }
         clean.setExecutor(cleanCommand);
         var clearlag = getCommand("clearlag");
-        if (clearlag == null) {
-            getLogger().severe("⚠ Could not register the /clearlag command. Check plugin.yml.");
-            return;
-        }
+        if (clearlag == null) { getLogger().severe("⚠ Could not register the /clearlag command. Check plugin.yml."); return; }
         clearlag.setExecutor(cleanCommand);
     }
     @Override
-    public void onDisable() {
-    }
-    public int getChunkRadius() {
-        return chunkRadius;
-    }
-    public boolean isFolia() {
-        return folia;
-    }
-    public Set<Material> getExcludedItems() {
-        return excludedItems;
-    }
+    public void onDisable() {}
+    public int getChunkRadius() { return chunkRadius; }
+    public boolean isFolia() { return folia; }
+    public Set<Material> getExcludedItems() { return excludedItems; }
     private void loadExcludedItems() {
         excludedItems.clear();
         List<String> raw = getConfig().getStringList("excluded-items");
@@ -72,6 +59,4 @@ public class ClearDrops extends JavaPlugin {
             return true;
         } catch (ClassNotFoundException e) {
             return false;
-        }
-    }
-}
+}   }   }
